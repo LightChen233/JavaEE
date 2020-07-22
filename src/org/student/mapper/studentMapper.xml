@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.student.mapper.StudentMapper">
+	<select id="queryStudentBySno" resultType="student" parameterType="int">
+		select * from teststudent where sno = #{sno}
+	</select>
+	<insert id="addStudent" parameterType="student">
+		insert into teststudent(sno,sname,sage,saddress) values(#{sno},#{sname},#{sage},#{saddress})
+	</insert>
+	<update id="updateStudentBySno" parameterType="student">
+		update teststudent set sname=#{sname},sage=#{sage},saddress=#{saddress} where sno=#{sno}
+	</update>
+	<delete id="deleteStudentBySno" parameterType="int">
+		delete from teststudent where sno=#{sno}
+	</delete>
+	<select id="queryAllStudents" resultType="student">
+		select * from teststudent
+	</select>
+	<select id="listStudentByName"  parameterType="string" resultType="student">
+            select * from   teststudent  where sname like concat('%',#{0},'%')
+    </select> 
+    <select id="listByPage" resultType="Student">
+            select * from   teststudent
+                <if test="start!=null and count!=null">
+                    limit #{start},#{count}
+                </if>
+    </select>   
+    <select id="queryCount" resultType="int">
+            select count(*) from   teststudent
+    </select> 
+</mapper>
